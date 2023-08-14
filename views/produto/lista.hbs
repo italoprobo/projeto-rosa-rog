@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lista de Produtos</title>
+</head>
+<body>
+  <h1>Lista de Produtos</h1>
+  
+  <ul>
+    {{#each produtos}}
+      <li>
+        <strong>ID:</strong> {{this.id}} | 
+        <strong>Nome:</strong> {{this.nome}} | 
+        <strong>Status:</strong> {{this.status}} | 
+        <strong>Destinação:</strong> {{this.destinacao}} | 
+        <strong>Rentabilidade:</strong> {{this.taxaRentabilidade}}% | 
+        <strong>Prazo Mínimo:</strong> {{this.prazoMinimo}} meses | 
+        <strong>Taxa Admin.:</strong> {{this.taxaAdministracao}}%
+      </li>
+    {{/each}}
+  </ul>
+</body>
+</html>
