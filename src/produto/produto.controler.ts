@@ -3,6 +3,7 @@ import { Controller, Delete, Get, Param,
 import { ProdutoService } from './produto.service';
 import { Produto } from './produto.model';
 import { Response } from 'express';
+import { CriarProdutoDTO } from './dtos/criar-produto-dto';
 
 
 @Controller('produto')
@@ -16,21 +17,28 @@ export class ProdutoController {
     return { produtos }
   }
 
+  
+  @Get('adicionar')
+  @Render('produto/forms-produto')
+  renderFormulario() {
+    return {};
+  }
+
   @Post() 
-  adicionarProduto(@Res() res: Response, @Body() novoProduto: Produto){
+  adicionarProduto(@Res() res: Response, @Body() novoProduto: CriarProdutoDTO){
     this.produtoService.adicionarProduto(novoProduto);
     res.redirect(`/produto/lista`)
   }
 
   @Delete(':id')
-  removerProduto(@Param('id') id: string) {
+  removerProduto(@Res() res: Response, @Param('id') id: string) {
     this.produtoService.removerProduto(id);
-    return { message : 'Produto removido com sucesso! '};
+    res.redirect(`/produto/lista`)
   }
 
   @Put(':id/status')
-  mudarStatus(@Param('id') id: string) {
+  mudarStatus(@Res() res: Response, @Param('id') id: string) {
     this.produtoService.mudarStatus(id)
-    return { message : 'Status do produto foi alterado!' }
+    res.redirect(`/produto/lista`)
   }
 }

@@ -1,14 +1,26 @@
 import { Injectable } from '@nestjs/common';
 import { Produto } from './produto.model';
 import { v4 as uuidv4 } from 'uuid'
+import { CriarProdutoDTO } from './dtos/criar-produto-dto';
+import { validate } from 'class-validator';
 
 @Injectable()
 export class ProdutoService {
   private produtos: Produto[] = [];
 
-  adicionarProduto(produto: Produto) {
-    const novoProduto: Produto = {...produto, id: uuidv4().substr(0, 8)}
-    this.produtos.push(novoProduto);
+  async adicionarProduto(novoProduto: CriarProdutoDTO) {
+    const errors = await validate(novoProduto);
+
+    if (errors.length > 0) {
+      throw new Error('Erro de validação');
+    }
+
+    const produto: Produto = {
+      id: uuidv4().substr(0, 8),
+      ...novoProduto,
+    };
+
+    this.produtos.push(produto);
   }
 
   listarProdutos() {
