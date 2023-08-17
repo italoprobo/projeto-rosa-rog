@@ -8,19 +8,9 @@ import { validate } from 'class-validator';
 export class ProdutoService {
   private produtos: Produto[] = [];
 
-  async adicionarProduto(novoProduto: CriarProdutoDTO) {
-    const errors = await validate(novoProduto);
-
-    if (errors.length > 0) {
-      throw new Error('Erro de validação');
-    }
-
-    const produto: Produto = {
-      id: uuidv4().substr(0, 8),
-      ...novoProduto,
-    };
-
-    this.produtos.push(produto);
+  adicionarProduto(produto: CriarProdutoDTO) {
+    const novoProduto: Produto = {...produto, id: uuidv4().substr(0, 8)}
+    this.produtos.push(novoProduto);
   }
 
   listarProdutos() {

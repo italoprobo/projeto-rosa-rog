@@ -8,7 +8,7 @@ export interface Produto {
 
     destinacao: string;
 
-    taxa_retabilidade: number;
+    taxa_rentabilidade: number;
 
     prazo: number;
 

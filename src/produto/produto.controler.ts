@@ -24,10 +24,15 @@ export class ProdutoController {
     return {};
   }
 
-  @Post() 
-  adicionarProduto(@Res() res: Response, @Body() novoProduto: CriarProdutoDTO){
-    this.produtoService.adicionarProduto(novoProduto);
-    res.redirect(`/produto/lista`)
+  @Post('form-produto') 
+  async adicionarProduto(@Res() res: Response, @Body() novoProduto: CriarProdutoDTO){
+    console.log("Valores do novo produto: ", novoProduto)
+    try{
+      this.produtoService.adicionarProduto(novoProduto);
+      res.redirect(`/produto/lista`)
+    } catch (error) {
+      console.error('Erro ao adicionar o produto:', error);     
+    } 
   }
 
   @Delete(':id')
