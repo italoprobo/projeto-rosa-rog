@@ -8,7 +8,7 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   //class validator
-  app.useGlobalPipes(new ValidationPipe())
+  app.useGlobalPipes(new ValidationPipe({ transform: true }))
 
   //public
   app.useStaticAssets(join(__dirname, '..', 'public'));

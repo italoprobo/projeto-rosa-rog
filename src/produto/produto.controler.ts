@@ -19,14 +19,13 @@ export class ProdutoController {
 
   
   @Get('adicionar')
-  @Render('produto/forms-produto')
+  @Render('produto/add-produto')
   renderFormulario() {
     return {};
   }
 
   @Post('form-produto') 
   async adicionarProduto(@Res() res: Response, @Body() novoProduto: CriarProdutoDTO){
-    console.log("Valores do novo produto: ", novoProduto)
     try{
       this.produtoService.adicionarProduto(novoProduto);
       res.redirect(`/produto/lista`)
@@ -38,12 +37,12 @@ export class ProdutoController {
   @Delete(':id')
   removerProduto(@Res() res: Response, @Param('id') id: string) {
     this.produtoService.removerProduto(id);
-    res.redirect(`/produto/lista`)
+    res.sendStatus(204)
   }
 
   @Put(':id/status')
   mudarStatus(@Res() res: Response, @Param('id') id: string) {
     this.produtoService.mudarStatus(id)
-    res.redirect(`/produto/lista`)
+    res.sendStatus(204);
   }
 }
