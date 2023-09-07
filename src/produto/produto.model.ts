@@ -1,10 +1,15 @@
+export enum Status {
+    DISPONIVEL,
+    INDISPONIVEL
+}
+
 export interface Produto {
 
-    id: string;
+    id?: string;
 
     nome: string;
 
-    status: 'Disponível' | 'Indisponível';
+    status: Status
 
     destinacao: string;
 
@@ -13,5 +18,9 @@ export interface Produto {
     prazo: number;
 
     taxa_adm: number;
+
+    vencimento: Date;
+
+    liquidez: boolean
 
 }

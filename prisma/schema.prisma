@@ -10,16 +10,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Status {
+  DISPONIVEL
+  INDISPONIVEL
+}
+
 model Produto {
   id BigInt @id @default(autoincrement())
   nome String 
-  status String
+  status Status @default(DISPONIVEL)
   destinacao String
-  taxaRentabilidade Int
-  prazoMinimoRealizacao Int
-  taxaAdministracao Float @default(0)
-  vencimento DateTime
+  taxaRentabilidade Float
+  prazoMinimoRealizacao Float
+  taxaAdministracao Float 
+  dt_vencimento DateTime   
+  liquidezDiaria Boolean 
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  @@map("produto")
 }

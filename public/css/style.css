@@ -41,6 +41,7 @@ body {
 #input-time,
 #input-manage,
 #select-prod,
+#input-date,
 #btn-new-prod {
     border: none;
     font-size: 1rem;
@@ -52,6 +53,7 @@ body {
 #input-destination, 
 #input-rate, 
 #input-time,
+#input-date,
 #input-manage,
 #select-prod {
     width: 11rem;
@@ -184,5 +186,4 @@ input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
-
 

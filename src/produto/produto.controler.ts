@@ -4,13 +4,17 @@ import { ProdutoService } from './produto.service';
 import { Produto } from './produto.model';
 import { Response } from 'express';
 import { CriarProdutoDTO } from './dtos/criar-produto-dto';
+import { ApiExcludeEndpoint, ApiTags, ApiResponse } from '@nestjs/swagger';
 
 
-@Controller('produto')
+@ApiTags('Produtos')
+@Controller('api/v1/produtos/')
 export class ProdutoController {
   constructor(private readonly produtoService: ProdutoService) {}
 
-  @Get('lista')
+  @Get('/')
+  @ApiResponse({ status: 200, description: 'OK.'})
+  @ApiResponse({ status: 404, description: 'Ocorreu um erro com a página.'})
   @Render('produto/lista')
   listarProdutos() {
     const produtos: Produto[] = this.produtoService.listarProdutos();
@@ -24,15 +28,17 @@ export class ProdutoController {
     return {};
   }
 
-  @Post('form-produto') 
+  @Post('/') 
+  @ApiResponse({ status: 201, description: 'O produto foi adicionado com sucesso.'})
+  @ApiResponse({ status: 404, description: 'Ocorreu um erro ao adicionar o produto.'})
   async adicionarProduto(@Res() res: Response, @Body() novoProduto: CriarProdutoDTO){
     try{
       this.produtoService.adicionarProduto(novoProduto);
-      res.redirect(`/produto/lista`)
+      res.redirect('/api/v1/produtos/')
     } catch (error) {
       console.error('Erro ao adicionar o produto:', error);     
     } 
-  }
+  } 
 
   @Delete(':id')
   removerProduto(@Res() res: Response, @Param('id') id: string) {

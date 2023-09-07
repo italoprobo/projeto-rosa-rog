@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Lista de Produtos</title>
+  <title>Adicionar Produtos</title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
@@ -9,7 +9,7 @@
   
   <div class="content">
     <div class="content--add-prod">
-        <form action="form-produto" method="POST">
+        <form action="/api/v1/produtos/" method="POST">
 
           <input type="text" id="input-new-prod" name="nome" placeholder="Nome...">
 
@@ -84,34 +84,43 @@
 
 </body>
 <script>
-  function removerProduto(id) {
-    if (confirm("Tem certeza de que deseja remover o produto?")) {
-      fetch(`/produto/${id}`, {
-        method: "DELETE"
-      }).then(response => {
-        if (response.ok) {
-          location.reload(); 
-        } else {
-          console.error("Erro ao remover produto");
-        }
-      });
-    }
+function removerProduto(id) {
+  if (confirm("Tem certeza de que deseja remover o produto?")) {
+    fetch(`/api/v1/produtos/${id}`, {
+      method: "DELETE"
+    }).then(response => {
+      if (response.ok) {
+        location.reload();
+      } else {
+        console.error("Erro ao remover produto");
+      }
+    });
+  } else {
+    event.preventDefault();
   }
+}
 
-    function mudarStatus(id, statusAtual) {
-    const novoStatus = statusAtual === "Disponível" ? "Indisponível" : "Disponível";
-    if (confirm(`Tem certeza de que deseja mudar o status para ${novoStatus}?`)) {
-      fetch(`/produto/${id}/status`, {
-        method: "PUT"
-      }).then(response => {
-        if (response.ok) {
-          location.reload(); 
-        } else {
-          console.error("Erro ao mudar o status do produto");
-        }
-      });
-    }
+
+function mudarStatus(id, statusAtual) {
+  const novoStatus = statusAtual === "Disponível" ? "Indisponível" : "Disponível";
+  if (confirm(`Tem certeza de que deseja mudar o status para ${novoStatus}?`)) {
+    fetch(`/api/v1/produtos/${id}/status`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ status: novoStatus })
+    }).then(response => {
+      if (response.ok) {
+        location.reload();
+      } else {
+        console.error("Erro ao mudar o status do produto");
+      }
+    });
+  } else {
+    event.preventDefault();
   }
+}
 
 </script>
 </html>
